@@ -24,6 +24,7 @@ _obj
 _test
 bin/
 pkg/
+obj/
 
 # Dependency directories
 vendor/
@@ -31,6 +32,7 @@ vendor/
 # IDE specific files
 .idea/
 .vscode/
+.vs/
 *.swp
 *.swo
 *~
@@ -69,6 +71,13 @@ build/
 out/
 target/
 .gradle/
+*.vsdir
+*.vsidx
+*.csproj.user
+*.suo
+*.user
+*.mdb
+*.pdb
 
 # Node.js (for frontend or Node.js services)
 node_modules/

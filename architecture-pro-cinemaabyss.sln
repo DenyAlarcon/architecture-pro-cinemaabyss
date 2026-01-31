@@ -1,0 +1,45 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "microservices", "microservices", "{B45C9767-1103-6FBC-A12D-A41ACF5CD2F9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "events", "events", "{5C8892CD-116D-31AE-E690-F60468896100}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventsService", "src\microservices\events\EventsService.csproj", "{E0456D9B-60F1-227E-A61A-0A9BCA50F013}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "proxy", "proxy", "{86E7FAEB-9DD3-B266-F3EC-7C31D240B93C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProxyService", "src\microservices\proxy\ProxyService.csproj", "{A7403A84-C675-F7A0-3050-319971EF972A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E0456D9B-60F1-227E-A61A-0A9BCA50F013}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0456D9B-60F1-227E-A61A-0A9BCA50F013}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0456D9B-60F1-227E-A61A-0A9BCA50F013}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0456D9B-60F1-227E-A61A-0A9BCA50F013}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7403A84-C675-F7A0-3050-319971EF972A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7403A84-C675-F7A0-3050-319971EF972A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7403A84-C675-F7A0-3050-319971EF972A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7403A84-C675-F7A0-3050-319971EF972A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B45C9767-1103-6FBC-A12D-A41ACF5CD2F9} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{5C8892CD-116D-31AE-E690-F60468896100} = {B45C9767-1103-6FBC-A12D-A41ACF5CD2F9}
+		{E0456D9B-60F1-227E-A61A-0A9BCA50F013} = {5C8892CD-116D-31AE-E690-F60468896100}
+		{86E7FAEB-9DD3-B266-F3EC-7C31D240B93C} = {B45C9767-1103-6FBC-A12D-A41ACF5CD2F9}
+		{A7403A84-C675-F7A0-3050-319971EF972A} = {86E7FAEB-9DD3-B266-F3EC-7C31D240B93C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {53D150D8-2C71-41A4-A722-EDCB51CCFD53}
+	EndGlobalSection
+EndGlobal

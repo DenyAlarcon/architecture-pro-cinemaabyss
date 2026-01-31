@@ -1,0 +1,76 @@
+﻿@startuml
+title CinemaAbyss Container Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Person(user, "Пользователь", "Смотрит контент, ставит оценки, управляет подпиской (ноутбуки, Smart TV, мобильные устройства)")
+
+System(CinemaAbyssSystem, "CinemaAbyss", "Платформа онлайн-кинотеатра")
+
+Container_Boundary(CinemaAbyssSystem, "Платформа CinemaAbyss (Kubernetes)") {
+  Container(gateway, "API Gateway", "Go / NGINX", "Единая точка входа, маршрутизация, аутентификация, rate limiting, адаптация под устройство")
+  Container(users, "Сервис пользователей", "Go", "Профили, аутентификация, устройства")
+  Container(catalog, "Сервис метаданных", "Go", "Метаданные (фильмы, жанры, актёры)")
+  Container(video, "Сервис видео/стриминга", "Go", "Сессии воспроизведения")
+  Container(subs, "Сервис подписок", "Go", "Тарифы, права доступа")
+  Container(pay, "Платёжный сервис", "Go", "Обработка платежей")
+  Container(promo, "Сервис промо", "Go", "Скидки, купоны")
+  Container(favs, "Сервис избранного", "Go", "Коллекции, списки просмотра")
+  Container(ratings, "Сервис оценок/отзывов", "Go", "Оценки и отзывы пользователей")
+  Container(recoAdapter, "Адаптер рекомендаций", "Go", "Синхронизирует поведенческие данные, получает рекомендации")
+  ContainerQueue(kafka, "Kafka", "Шина событий")
+
+  ContainerDb(userDb, "БД пользователей", "PostgreSQL", "Хранит данные пользователей")
+  ContainerDb(catalogDb, "БД каталога", "PostgreSQL", "Хранит метаданные")
+  ContainerDb(videoDb, "БД видео", "PostgreSQL", "Хранит данные воспроизведения")
+  ContainerDb(subsDb, "БД подписок", "PostgreSQL", "Хранит подписки")
+  ContainerDb(payDb, "БД платежей", "PostgreSQL", "Хранит платежи")
+  ContainerDb(promoDb, "БД промо", "PostgreSQL", "Хранит скидки")
+  ContainerDb(favsDb, "БД избранного", "PostgreSQL", "Хранит коллекции")
+  ContainerDb(ratingsDb, "БД оценок", "PostgreSQL", "Хранит оценки и отзывы")
+}
+
+System_Ext(reco, "Рекомендательная система", "Внешняя")
+System_Ext(paymentProviders, "Платёжные провайдеры", "Внешняя")
+System_Ext(contentProviders, "Онлайн-кинотеатры/поставщики контента", "Внешняя")
+System_Ext(objectStorage, "Объектное хранилище (S3)", "Внешнее хранилище контента")
+
+Rel(user, gateway, "Использует", "HTTPS")
+
+Rel(gateway, users, "Аутентификация, профиль", "REST/gRPC")
+Rel(gateway, catalog, "Просмотр/поиск метаданных", "REST/gRPC")
+Rel(gateway, video, "Сессии воспроизведения", "REST/gRPC")
+Rel(gateway, subs, "Управление подпиской", "REST/gRPC")
+Rel(gateway, pay, "Платежи", "REST/gRPC")
+Rel(gateway, promo, "Применение скидок", "REST/gRPC")
+Rel(gateway, favs, "Избранное", "REST/gRPC")
+Rel(gateway, ratings, "Оценки", "REST/gRPC")
+Rel(gateway, recoAdapter, "Получение рекомендаций", "REST/gRPC")
+
+Rel(users, userDb, "Читает/пишет")
+Rel(catalog, catalogDb, "Читает/пишет")
+Rel(video, videoDb, "Читает/пишет")
+Rel(subs, subsDb, "Читает/пишет")
+Rel(pay, payDb, "Читает/пишет")
+Rel(promo, promoDb, "Читает/пишет")
+Rel(favs, favsDb, "Читает/пишет")
+Rel(ratings, ratingsDb, "Читает/пишет")
+
+Rel(users, kafka, "Публикует доменные события", "Kafka")
+Rel(catalog, kafka, "Публикует доменные события", "Kafka")
+Rel(video, kafka, "Публикует доменные события", "Kafka")
+Rel(subs, kafka, "Публикует доменные события", "Kafka")
+Rel(pay, kafka, "Публикует доменные события", "Kafka")
+Rel(promo, kafka, "Публикует доменные события", "Kafka")
+Rel(favs, kafka, "Публикует доменные события", "Kafka")
+Rel(ratings, kafka, "Публикует доменные события", "Kafka")
+Rel(recoAdapter, kafka, "Потребляет поведенческие события", "Kafka")
+
+Rel_D(recoAdapter, reco, "Получает рекомендации", "HTTPS")
+Rel_D(pay, paymentProviders, "Проводит платежи", "HTTPS")
+Rel_D(video, contentProviders, "Получает права/контент", "HTTPS")
+Rel_D(video, objectStorage, "Хранение и выдача контента", "S3 API")
+
+@enduml
